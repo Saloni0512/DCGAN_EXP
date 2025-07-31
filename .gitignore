@@ -1,0 +1,9 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Downloaded data folder
+data/
+
+# System files
+.DS_Store
