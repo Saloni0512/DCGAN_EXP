@@ -4,6 +4,7 @@
 ## Generated images after last epoch
 The model is trained on 60,000 train-data images of the FashionMNIST dataset for 50 epochs on 2 T4 GPUs.
 Training images are 28x28 by default and they were resized to 32x32 for this experiment.
+Since the images have low resolution,the generator is *updated twice* every step during training.
 
 
 
