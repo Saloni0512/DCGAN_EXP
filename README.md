@@ -46,6 +46,7 @@ The final generated images are not very high quality but show good diversity whi
 ## References
 * [DCGAN PyTorch Tutorial](https://docs.pytorch.org/tutorials/beginner/dcgan_faces_tutorial.html) 
 * [ganhacks repo](https://github.com/soumith/ganhacks)
+* [GANs trained by TTUR](https://arxiv.org/pdf/1706.08500)
 
 ## Key Takeaways
 1. Training GANs takes *days*.
