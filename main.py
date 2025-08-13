@@ -1,16 +1,13 @@
 import torch
 import torch.nn as nn
-import torchvision.datasets as datasets
-import torchvision.transforms as transforms
-from torchvision.transforms import InterpolationMode
 import torchvision.utils as vutils
-from torch.utils.data import DataLoader
 import os
 import random
 from timeit import default_timer as timer
 
 # Imports from other files
 import config
+import data_pipeline
 from model import Generator, Discriminator
 from utils import weights_init, plot_loss_curves, plot_real_vs_fake 
 
@@ -23,24 +20,6 @@ def train():
     random.seed(config.MANUAL_SEED)
     torch.manual_seed(config.MANUAL_SEED)
 
-    ## Data Loading
-    # Image transformation pipeline
-    transform = transforms.Compose([
-                transforms.Resize(config.IMAGE_SIZE, InterpolationMode.BILINEAR), # 28x28 -> 32x32
-                transforms.ToTensor(),
-                transforms.Normalize((0.5,), (0.5,)),
-    ])
-
-    dataset = datasets.FashionMNIST(root="data",
-                                train=True,
-                                download=True,
-                                transform=transform)
-   
-    dataloader = DataLoader(dataset=dataset,
-                        batch_size=config.BATCH_SIZE,
-                        num_workers=config.NUM_WORKERS,
-                        shuffle=True
-    ) 
 
     ## Model Initialization 
     netG = Generator(config.NGPU).to(config.DEVICE)
@@ -64,7 +43,7 @@ def train():
     D_losses = []
 
     for epoch in range(config.NUM_EPOCHS):
-        for i, data in enumerate(dataloader, 0):
+        for i, data in enumerate(data_pipeline.dataloader, 0):
             ### Update D network 
             ## Train with all-real batch
             netD.zero_grad()
@@ -102,7 +81,7 @@ def train():
         
             # Print training results
             if i % 50 == 0:
-                print(f'[{epoch+1}/{config.NUM_EPOCHS}][{i}/{len(dataloader)}] Loss_D: {lossD.item():.4f} Loss_G: {lossG.item():.4f} D(x): {D_x:.4f} D(G(z)): {D_G_z1:.4f}/{D_G_z2:.4f}')
+                print(f'[{epoch+1}/{config.NUM_EPOCHS}][{i}/{len(data_pipeline.dataloader)}] Loss_D: {lossD.item():.4f} Loss_G: {lossG.item():.4f} D(x): {D_x:.4f} D(G(z)): {D_G_z1:.4f}/{D_G_z2:.4f}')
         
             # Save losses for plotting later
             G_losses.append(lossG.item())
@@ -121,7 +100,7 @@ def train():
     ## Visualise the final images and loss curve
     print("Generating final plots...")
     plot_loss_curves(G_losses, D_losses)
-    plot_real_vs_fake(config.DEVICE, dataloader, img_list)
+    plot_real_vs_fake(config.DEVICE, data_pipeline.dataloader, img_list)
     print("Plots saved to the 'results' folder.")
 
 
