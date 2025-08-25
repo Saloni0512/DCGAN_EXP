@@ -1,4 +1,6 @@
-# DCGAN_EXP
+
+![dcgan](https://github.com/user-attachments/assets/fd94c47a-7bfc-48e4-b2d4-aeae12a217bd)
+
 >A simple PyTorch implementation of DCGAN, a variant of Generative Adversial Networks on the FashionMNIST images.
 
 ## Generated images after last epoch
