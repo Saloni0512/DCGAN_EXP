@@ -35,16 +35,16 @@ class Generator(nn.Module):
   def forward(self, input):
     # Check intermediate tensor shapes after each block
     x = self.block1(input)
-    print(f"After Block 1 (4x4): \t\t{x.shape}")
+    #print(f"After Block 1 (4x4): \t\t{x.shape}")
     
     x = self.block2(x)
-    print(f"After Block 2 (8x8): \t\t{x.shape}")
+    #print(f"After Block 2 (8x8): \t\t{x.shape}")
     
     x = self.block3(x)
-    print(f"After Block 3 (16x16): \t\t{x.shape}")
+    #print(f"After Block 3 (16x16): \t\t{x.shape}")
     
     x = self.block4(x)
-    print(f"After Block 4 (Output 32x32): \t{x.shape}")
+    #print(f"After Block 4 (Output 32x32): \t{x.shape}")
     
     return x
     
@@ -77,13 +77,14 @@ class Discriminator(nn.Module):
   
 
 
-if __name__ == '__main__':
-  # initialise generator 
-  gen = Generator(ngpu=config.NGPU).to(config.DEVICE)
-  print(f"Testing tensor shape values in Generator...")
-  # Create a random latent vector
-  noise = torch.randn(config.BATCH_SIZE, config.NZ, 1, 1, device=config.DEVICE)
-  fake_img = gen(noise)
-  print("-------------------------\n")
+# --- Model tests ---
+# if __name__ == '__main__':
+# --- Test the Generator ---
+#   gen = Generator(ngpu=config.NGPU).to(config.DEVICE)
+#   print(f"Testing tensor shape values in Generator...")
+ # Create a random latent vector
+ #  noise = torch.randn(config.BATCH_SIZE, config.NZ, 1, 1, device=config.DEVICE)
+ #  fake_img = gen(noise)
+ #  print("-------------------------\n")
 
 
